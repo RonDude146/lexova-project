@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI System Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .feature-box {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .feature-title {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        color: #3182CE;
+      }
+      .feature-title i {
+        margin-right: 8px;
+      }
+      .feature-description {
+        color: #718096;
+        font-size: 14px;
+      }
+      .setting-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .setting-label {
+        flex: 1;
+        font-size: 14px;
+      }
+      .setting-control {
+        width: 120px;
+        text-align: right;
+      }
+      .slider-container {
+        background: #E2E8F0;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+      }
+      .slider-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      .slider-track {
+        height: 6px;
+        background: #CBD5E0;
+        border-radius: 3px;
+        position: relative;
+        margin-bottom: 5px;
+      }
+      .slider-fill {
+        position: absolute;
+        height: 100%;
+        background: #3182CE;
+        border-radius: 3px;
+      }
+      .slider-thumb {
+        width: 16px;
+        height: 16px;
+        background: #3182CE;
+        border-radius: 50%;
+        position: absolute;
+        top: -5px;
+        margin-left: -8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">7/10</div>
+      </div>
+      
+      <div class="title">AI System Management</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">AI Lawyer Matching Configuration</div>
+          
+          <div class="feature-box">
+            <div class="feature-title"><i class="fas fa-cog"></i> Matching Algorithm Settings</div>
+            <p class="feature-description">Configure the parameters that determine how clients are matched with lawyers.</p>
+            
+            <div class="slider-container mt-3">
+              <div class="slider-label">
+                <span>Specialization Weight</span>
+                <span>75%</span>
+              </div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width: 75%"></div>
+                <div class="slider-thumb" style="left: 75%"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Higher values prioritize exact specialization matches over other factors</p>
+            </div>
+            
+            <div class="slider-container">
+              <div class="slider-label">
+                <span>Experience Weight</span>
+                <span>60%</span>
+              </div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width: 60%"></div>
+                <div class="slider-thumb" style="left: 60%"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Higher values prioritize lawyers with more years of experience</p>
+            </div>
+            
+            <div class="slider-container">
+              <div class="slider-label">
+                <span>Rating Weight</span>
+                <span>50%</span>
+              </div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width: 50%"></div>
+                <div class="slider-thumb" style="left: 50%"></div>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Higher values prioritize lawyers with better client ratings</p>
+            </div>
+          </div>
+          
+          <div class="feature-box">
+            <div class="feature-title"><i class="fas fa-filter"></i> Matching Filters</div>
+            <p class="feature-description">Control which lawyers appear in match results based on specific criteria.</p>
+            
+            <div class="setting-item mt-3">
+              <div class="setting-label">Minimum lawyer rating</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>3.5 stars</option>
+                  <option selected>4.0 stars</option>
+                  <option>4.5 stars</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Minimum experience required</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>1 year</option>
+                  <option selected>2 years</option>
+                  <option>5 years</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Include lawyers with pending verifications</div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" class="hidden">
+                  <span class="text-red-500 font-medium text-sm">No</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="section-title">AI Case Assistant Configuration</div>
+          
+          <div class="feature-box">
+            <div class="feature-title"><i class="fas fa-robot"></i> AI Assistant Behavior</div>
+            <p class="feature-description">Configure how the AI case assistant interacts with users and provides legal information.</p>
+            
+            <div class="setting-item mt-3">
+              <div class="setting-label">Response tone</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>Casual</option>
+                  <option selected>Professional</option>
+                  <option>Formal</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Response detail level</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>Concise</option>
+                  <option selected>Balanced</option>
+                  <option>Detailed</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Include legal citations</div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" checked class="hidden">
+                  <span class="text-green-500 font-medium text-sm">Yes</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Enable follow-up suggestions</div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" checked class="hidden">
+                  <span class="text-green-500 font-medium text-sm">Yes</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="feature-box">
+            <div class="feature-title"><i class="fas fa-shield-alt"></i> AI Safety & Compliance</div>
+            <p class="feature-description">Ensure the AI systems operate within legal and ethical boundaries.</p>
+            
+            <div class="setting-item mt-3">
+              <div class="setting-label">Legal disclaimer frequency</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>Every response</option>
+                  <option selected>Every session</option>
+                  <option>First use only</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Content moderation level</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>Basic</option>
+                  <option selected>Standard</option>
+                  <option>Strict</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Store conversation logs</div>
+              <div class="setting-control">
+                <label class="switch">
+                  <input type="checkbox" checked class="hidden">
+                  <span class="text-green-500 font-medium text-sm">Yes</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="setting-item">
+              <div class="setting-label">Log retention period</div>
+              <div class="setting-control">
+                <select class="bg-gray-100 border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>30 days</option>
+                  <option selected>90 days</option>
+                  <option>1 year</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-4 bg-white p-3 rounded-lg">
+            <div class="flex items-center text-sm">
+              <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+              <span>Changes to AI settings take effect immediately. Monitor system performance after making adjustments.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

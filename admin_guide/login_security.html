@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Security</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .step-container {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .step-number {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: #3182CE;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 24px;
+        margin-right: 8px;
+        font-weight: bold;
+      }
+      .step-title {
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+      .step-description {
+        margin-left: 32px;
+        color: #718096;
+        font-size: 14px;
+      }
+      .security-tip {
+        background: #E2E8F0;
+        border-left: 4px solid #3182CE;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 0 8px 8px 0;
+      }
+      .security-tip-title {
+        font-weight: bold;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+      }
+      .security-tip-title i {
+        margin-right: 8px;
+        color: #3182CE;
+      }
+      .security-tip-content {
+        font-size: 14px;
+      }
+      .admin-image {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 250px;
+        width: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">2/10</div>
+      </div>
+      
+      <div class="title">Login & Security</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">Accessing the Admin Dashboard</div>
+          
+          <div class="step-container">
+            <div><span class="step-number">1</span><span class="step-title">Navigate to Admin Portal</span></div>
+            <p class="step-description">Access at <span class="font-medium">https://admin.lexova.com</span> using a secure browser.</p>
+          </div>
+          
+          <div class="step-container">
+            <div><span class="step-number">2</span><span class="step-title">Enter Credentials</span></div>
+            <p class="step-description">Enter your admin email and password (separate from regular accounts).</p>
+          </div>
+          
+          <div class="step-container">
+            <div><span class="step-number">3</span><span class="step-title">Two-Factor Authentication</span></div>
+            <p class="step-description">Enter the verification code sent to your mobile device or authentication app.</p>
+          </div>
+          
+          <div class="step-container">
+            <div><span class="step-number">4</span><span class="step-title">Session Management</span></div>
+            <p class="step-description">Sessions expire after 30 minutes of inactivity. Use "Keep me logged in" only on secure devices.</p>
+          </div>
+          
+          <div class="section-title mt-4">Account Management</div>
+          <p class="mb-2 text-sm">To update your admin profile or change security settings:</p>
+          <p class="mb-1 text-sm"><i class="fas fa-angle-right text-blue-500 mr-2"></i> Click your profile icon in the top-right corner</p>
+          <p class="mb-1 text-sm"><i class="fas fa-angle-right text-blue-500 mr-2"></i> Select "Account Settings" from the dropdown</p>
+          <p class="mb-1 text-sm"><i class="fas fa-angle-right text-blue-500 mr-2"></i> Update profile, change password, or manage 2FA</p>
+        </div>
+        
+        <div>
+          <img src="/home/ubuntu/lexova_platform/admin_guide/admin_panel.webp" alt="Lexova Admin Login Panel" class="admin-image mb-4">
+          
+          <div class="section-title">Security Best Practices</div>
+          
+          <div class="security-tip">
+            <div class="security-tip-title"><i class="fas fa-lock"></i> Strong Password Policy</div>
+            <p class="security-tip-content">Use a unique password with at least 12 characters, including uppercase, lowercase, numbers, and special characters.</p>
+          </div>
+          
+          <div class="security-tip">
+            <div class="security-tip-title"><i class="fas fa-shield-alt"></i> Secure Environment</div>
+            <p class="security-tip-content">Only access from trusted devices and networks. Avoid public Wi-Fi for administrative tasks.</p>
+          </div>
+          
+          <div class="security-tip">
+            <div class="security-tip-title"><i class="fas fa-history"></i> Regular Password Updates</div>
+            <p class="security-tip-content">Change your admin password every 90 days and never reuse previous passwords.</p>
+          </div>
+          
+          <div class="security-tip">
+            <div class="security-tip-title"><i class="fas fa-sign-out-alt"></i> Always Log Out</div>
+            <p class="security-tip-content">Always use the "Log Out" button when finished, especially on shared computers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

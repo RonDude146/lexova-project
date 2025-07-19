@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .user-management-image {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        height: 280px;
+        width: 100%;
+        object-fit: cover;
+      }
+      .action-item {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .action-title {
+        font-weight: bold;
+        color: #3182CE;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+      }
+      .action-title i {
+        margin-right: 8px;
+      }
+      .action-description {
+        font-size: 14px;
+        color: #718096;
+      }
+      .status-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      .status-active {
+        background: #C6F6D5;
+        color: #22543D;
+      }
+      .status-pending {
+        background: #FEEBC8;
+        color: #744210;
+      }
+      .status-suspended {
+        background: #FED7D7;
+        color: #742A2A;
+      }
+      .table-container {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      .user-table th {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #E2E8F0;
+        color: #3182CE;
+        font-weight: bold;
+      }
+      .user-table td {
+        padding: 8px;
+        border-bottom: 1px solid #E2E8F0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">3/10</div>
+      </div>
+      
+      <div class="title">User Management</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">User Management Dashboard</div>
+          <p class="mb-3 text-sm">The User Management dashboard allows you to oversee all platform users, including clients and lawyers. You can verify credentials, manage account status, and handle user-related issues.</p>
+          
+          <img src="/home/ubuntu/lexova_platform/admin_guide/user_management.png" alt="Lexova User Management Dashboard" class="user-management-image mb-4">
+          
+          <div class="section-title mt-3">User Status Types</div>
+          <div class="flex flex-wrap mb-3">
+            <div class="mr-4 mb-2">
+              <span class="status-badge status-active">Active</span>
+              <span class="text-sm">Verified users with full access</span>
+            </div>
+            <div class="mr-4 mb-2">
+              <span class="status-badge status-pending">Pending</span>
+              <span class="text-sm">Awaiting verification</span>
+            </div>
+            <div class="mb-2">
+              <span class="status-badge status-suspended">Suspended</span>
+              <span class="text-sm">Access temporarily revoked</span>
+            </div>
+          </div>
+          
+          <div class="section-title mt-3">Quick Access</div>
+          <div class="flex flex-wrap">
+            <div class="mr-4 mb-2">
+              <a href="#" class="text-blue-600 hover:underline text-sm"><i class="fas fa-user-plus mr-1"></i> Add New Admin</a>
+            </div>
+            <div class="mr-4 mb-2">
+              <a href="#" class="text-blue-600 hover:underline text-sm"><i class="fas fa-user-check mr-1"></i> Verification Queue</a>
+            </div>
+            <div class="mb-2">
+              <a href="#" class="text-blue-600 hover:underline text-sm"><i class="fas fa-user-shield mr-1"></i> User Reports</a>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="section-title">Key User Management Actions</div>
+          
+          <div class="action-item">
+            <div class="action-title"><i class="fas fa-user-check"></i> Lawyer Verification</div>
+            <p class="action-description">Review lawyer credentials, bar association membership, and professional experience. Approve or reject verification requests based on documentation provided.</p>
+          </div>
+          
+          <div class="action-item">
+            <div class="action-title"><i class="fas fa-user-edit"></i> Edit User Information</div>
+            <p class="action-description">Update user profiles, correct information, or assist with account changes when users are unable to do so themselves.</p>
+          </div>
+          
+          <div class="action-item">
+            <div class="action-title"><i class="fas fa-user-lock"></i> Account Status Management</div>
+            <p class="action-description">Activate pending accounts, suspend accounts for policy violations, or permanently ban users who violate platform terms.</p>
+          </div>
+          
+          <div class="action-item">
+            <div class="action-title"><i class="fas fa-key"></i> Password Reset</div>
+            <p class="action-description">Assist users with password recovery or force password resets for security concerns.</p>
+          </div>
+          
+          <div class="section-title mt-3">Recent User Activity</div>
+          <div class="table-container">
+            <table class="user-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Last Active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sarah Johnson</td>
+                  <td>Client</td>
+                  <td><span class="status-badge status-active">Active</span></td>
+                  <td>Today</td>
+                </tr>
+                <tr>
+                  <td>David Wilson</td>
+                  <td>Lawyer</td>
+                  <td><span class="status-badge status-active">Active</span></td>
+                  <td>Yesterday</td>
+                </tr>
+                <tr>
+                  <td>Michael Chen</td>
+                  <td>Lawyer</td>
+                  <td><span class="status-badge status-pending">Pending</span></td>
+                  <td>3 days ago</td>
+                </tr>
+                <tr>
+                  <td>Emily Wong</td>
+                  <td>Client</td>
+                  <td><span class="status-badge status-suspended">Suspended</span></td>
+                  <td>1 week ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

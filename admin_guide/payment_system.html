@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment System Administration</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .payment-action {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .action-title {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+      }
+      .action-title i {
+        margin-right: 8px;
+        color: #3182CE;
+      }
+      .action-description {
+        color: #718096;
+        font-size: 14px;
+        margin-left: 24px;
+      }
+      .process-step {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .step-indicator {
+        width: 24px;
+        height: 24px;
+        background: #3182CE;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 24px;
+        margin-right: 8px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+      .step-text {
+        font-size: 14px;
+      }
+      .chart-container {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">5/10</div>
+      </div>
+      
+      <div class="title">Payment System Administration</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">Payment Management</div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-search"></i> Viewing Transactions</div>
+            <p class="action-description">Access all platform transactions from the Payment Management dashboard. Filter by status, date range, client, or lawyer.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-money-check-alt"></i> Processing Payments</div>
+            <p class="action-description">Monitor pending payments and ensure successful processing. The system automatically attempts to process payments three times before marking as failed.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-undo"></i> Handling Refunds</div>
+            <p class="action-description">Process refund requests through the transaction detail page. Partial or full refunds can be issued with appropriate documentation.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-file-invoice-dollar"></i> Financial Reporting</div>
+            <p class="action-description">Generate financial reports for accounting purposes. Export transaction data in CSV or PDF format for further analysis.</p>
+          </div>
+          
+          <div class="section-title mt-4">Refund Process</div>
+          
+          <div class="process-step">
+            <div class="step-indicator">1</div>
+            <div class="step-text">Navigate to the transaction details page for the payment requiring a refund</div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-indicator">2</div>
+            <div class="step-text">Click the "Process Refund" button and select full or partial refund</div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-indicator">3</div>
+            <div class="step-text">Enter refund amount (for partial refunds) and document the reason</div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-indicator">4</div>
+            <div class="step-text">Review details and confirm the refund transaction</div>
+          </div>
+          
+          <div class="process-step">
+            <div class="step-indicator">5</div>
+            <div class="step-text">System processes the refund and notifies both client and lawyer</div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="section-title">Transaction Overview</div>
+          
+          <div class="chart-container mb-4">
+            <div style="height: 250px;">
+              <canvas id="transactionChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="section-title">Payment Settings</div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-percentage"></i> Platform Fee Configuration</div>
+            <p class="action-description">Adjust the platform's commission percentage from lawyer payments. Current default: 15% of transaction value.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-credit-card"></i> Payment Gateway Settings</div>
+            <p class="action-description">Configure payment processor settings, API keys, and webhook endpoints. The platform currently supports Stripe and PayPal integration.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-hand-holding-usd"></i> Payout Schedule</div>
+            <p class="action-description">Set the frequency of lawyer payouts (weekly, bi-weekly, or monthly) and minimum payout thresholds.</p>
+          </div>
+          
+          <div class="payment-action">
+            <div class="action-title"><i class="fas fa-exclamation-triangle"></i> Fraud Detection</div>
+            <p class="action-description">Configure fraud detection rules and thresholds. Review flagged transactions in the Fraud Monitoring section.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Transaction data chart
+      const ctx = document.getElementById('transactionChart').getContext('2d');
+      const transactionChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            {
+              label: 'Completed',
+              data: [65, 78, 86, 92, 105, 118],
+              backgroundColor: '#3182CE',
+              borderColor: '#3182CE',
+              borderWidth: 1
+            },
+            {
+              label: 'Refunded',
+              data: [8, 6, 9, 7, 10, 12],
+              backgroundColor: '#718096',
+              borderColor: '#718096',
+              borderWidth: 1
+            },
+            {
+              label: 'Failed',
+              data: [4, 3, 5, 4, 6, 5],
+              backgroundColor: '#E53E3E',
+              borderColor: '#E53E3E',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly Transaction Status (Last 6 Months)',
+              font: {
+                size: 14
+              }
+            },
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Number of Transactions'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Month'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .chart-container {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .report-type {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .report-title {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        color: #3182CE;
+      }
+      .report-title i {
+        margin-right: 8px;
+      }
+      .report-description {
+        color: #718096;
+        font-size: 14px;
+      }
+      .action-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .action-icon {
+        color: #3182CE;
+        margin-right: 8px;
+        margin-top: 2px;
+      }
+      .action-text {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">8/10</div>
+      </div>
+      
+      <div class="title">Reports & Analytics</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">Available Report Types</div>
+          
+          <div class="report-type">
+            <div class="report-title"><i class="fas fa-chart-line"></i> Platform Performance</div>
+            <p class="report-description">Overview of key platform metrics including user growth, revenue, case volume, and success rates. Ideal for executive summaries and board reports.</p>
+          </div>
+          
+          <div class="report-type">
+            <div class="report-title"><i class="fas fa-dollar-sign"></i> Financial Reports</div>
+            <p class="report-description">Detailed financial analysis including revenue, platform fees, lawyer earnings, and transaction volume. Available in monthly, quarterly, and annual formats.</p>
+          </div>
+          
+          <div class="report-type">
+            <div class="report-title"><i class="fas fa-users"></i> User Analytics</div>
+            <p class="report-description">Comprehensive user data including acquisition, retention, demographics, and engagement metrics for both clients and lawyers.</p>
+          </div>
+          
+          <div class="report-type">
+            <div class="report-title"><i class="fas fa-briefcase"></i> Case Analytics</div>
+            <p class="report-description">Analysis of case data including case types, resolution times, success rates, and dispute frequency across different legal specializations.</p>
+          </div>
+          
+          <div class="report-type">
+            <div class="report-title"><i class="fas fa-user-tie"></i> Lawyer Performance</div>
+            <p class="report-description">Detailed metrics on lawyer performance including ratings, case load, earnings, response times, and client satisfaction scores.</p>
+          </div>
+          
+          <div class="section-title mt-4">Report Generation</div>
+          
+          <div class="bg-white p-3 rounded-lg">
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-calendar-alt"></i></div>
+              <div class="action-text"><strong>Select Time Range:</strong> Filter data by day, week, month, quarter, or custom date range.</div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-filter"></i></div>
+              <div class="action-text"><strong>Apply Filters:</strong> Narrow results by user type, case category, payment status, or geographic region.</div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-file-export"></i></div>
+              <div class="action-text"><strong>Export Options:</strong> Download reports in PDF, CSV, or Excel formats for further analysis.</div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-clock"></i></div>
+              <div class="action-text"><strong>Schedule Reports:</strong> Set up automated report generation and email delivery on daily, weekly, or monthly basis.</div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="section-title">Platform Growth Metrics</div>
+          
+          <div class="chart-container">
+            <div style="height: 250px;">
+              <canvas id="growthChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="section-title mt-3">Case Resolution Analytics</div>
+          
+          <div class="chart-container">
+            <div style="height: 250px;">
+              <canvas id="caseResolutionChart"></canvas>
+            </div>
+          </div>
+          
+          <div class="bg-white p-3 rounded-lg mt-3">
+            <div class="font-medium mb-2 text-sm">Analytics Best Practices:</div>
+            <ul class="text-sm space-y-1">
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Review key metrics weekly to identify trends early</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Compare current performance against previous periods</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Investigate significant changes in metrics promptly</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Share insights with relevant team members</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Platform Growth Chart
+      const growthCtx = document.getElementById('growthChart').getContext('2d');
+      const growthChart = new Chart(growthCtx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [
+            {
+              label: 'New Clients',
+              data: [120, 145, 180, 210, 250, 285],
+              borderColor: '#3182CE',
+              backgroundColor: 'rgba(49, 130, 206, 0.1)',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'New Lawyers',
+              data: [45, 52, 68, 75, 90, 105],
+              borderColor: '#718096',
+              backgroundColor: 'rgba(113, 128, 150, 0.1)',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Monthly User Growth',
+              font: {
+                size: 14
+              }
+            },
+            legend: {
+              position: 'bottom'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'New Users'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Month'
+              }
+            }
+          }
+        }
+      });
+      
+      // Case Resolution Chart
+      const caseCtx = document.getElementById('caseResolutionChart').getContext('2d');
+      const caseResolutionChart = new Chart(caseCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Family Law', 'Corporate', 'Real Estate', 'Criminal', 'Immigration', 'IP'],
+          datasets: [
+            {
+              label: 'Avg. Resolution Time (Days)',
+              data: [28, 45, 21, 35, 18, 42],
+              backgroundColor: '#3182CE'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Average Case Resolution Time by Practice Area',
+              font: {
+                size: 14
+              }
+            },
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Days'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Practice Area'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+

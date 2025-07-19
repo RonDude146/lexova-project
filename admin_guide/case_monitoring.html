@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Monitoring & Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    <style>
+      .slide-container {
+        width: 1280px;
+        min-height: 720px;
+        background: #EBF8FF;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        color: #2A4365;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3182CE;
+      }
+      .title {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #3182CE;
+      }
+      .info-box {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+      .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+      .status-active {
+        background-color: #48BB78;
+      }
+      .status-pending {
+        background-color: #ECC94B;
+      }
+      .status-completed {
+        background-color: #3182CE;
+      }
+      .status-disputed {
+        background-color: #E53E3E;
+      }
+      .action-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .action-icon {
+        width: 24px;
+        height: 24px;
+        background: #E2E8F0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        color: #3182CE;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="header">
+        <div class="logo">LEXOVA</div>
+        <div class="page-number">4/10</div>
+      </div>
+      
+      <div class="title">Case Monitoring & Management</div>
+      
+      <div class="content-grid">
+        <div>
+          <div class="section-title">Case Overview Dashboard</div>
+          
+          <div class="info-box">
+            <p class="mb-2 text-sm">The Case Monitoring section allows you to oversee all legal cases on the platform. Access it from the main sidebar by clicking on <strong>Cases</strong>.</p>
+            
+            <div class="mt-4 mb-2 font-medium">Case Status Types:</div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div><span class="status-indicator status-active"></span> Active (in progress)</div>
+              <div><span class="status-indicator status-pending"></span> Pending (awaiting action)</div>
+              <div><span class="status-indicator status-completed"></span> Completed (resolved)</div>
+              <div><span class="status-indicator status-disputed"></span> Disputed (requires attention)</div>
+            </div>
+          </div>
+          
+          <div class="section-title mt-4">Case Management Actions</div>
+          
+          <div class="info-box">
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-search fa-sm"></i></div>
+              <div>
+                <div class="font-medium text-sm">View Case Details</div>
+                <p class="text-sm text-gray-600">Click on any case to view complete information including client details, lawyer assignment, case documents, and communication history.</p>
+              </div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-user-check fa-sm"></i></div>
+              <div>
+                <div class="font-medium text-sm">Reassign Lawyer</div>
+                <p class="text-sm text-gray-600">If needed, you can reassign a case to a different lawyer by clicking the "Reassign" button in the case details page.</p>
+              </div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-flag fa-sm"></i></div>
+              <div>
+                <div class="font-medium text-sm">Flag for Review</div>
+                <p class="text-sm text-gray-600">Mark cases requiring special attention with the "Flag" button. Flagged cases appear in the priority queue.</p>
+              </div>
+            </div>
+            
+            <div class="action-item">
+              <div class="action-icon"><i class="fas fa-comment-alt fa-sm"></i></div>
+              <div>
+                <div class="font-medium text-sm">Send Notifications</div>
+                <p class="text-sm text-gray-600">Contact clients or lawyers directly through the platform messaging system from the case details page.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <div class="section-title">Case Distribution</div>
+          <div style="height: 250px;">
+            <canvas id="caseDistributionChart"></canvas>
+          </div>
+          
+          <div class="section-title mt-4">Case Monitoring Best Practices</div>
+          
+          <div class="info-box">
+            <ul class="text-sm space-y-2">
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> <strong>Regular Review:</strong> Check the dashboard daily for new cases and status changes.</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> <strong>Prioritize Disputes:</strong> Address disputed cases within 24 hours to maintain client satisfaction.</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> <strong>Monitor Aging Cases:</strong> Pay special attention to cases that have been active for more than 30 days.</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> <strong>Quality Assurance:</strong> Randomly review completed cases to ensure service quality standards.</li>
+              <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> <strong>Documentation:</strong> Ensure all case actions and administrative interventions are properly documented.</li>
+            </ul>
+          </div>
+          
+          <div class="info-box mt-4">
+            <div class="font-medium mb-2">Case Filtering Options:</div>
+            <p class="text-sm">The case dashboard includes powerful filtering options to help you find specific cases:</p>
+            <div class="grid grid-cols-2 gap-2 mt-2 text-sm">
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Status</div>
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Case Type</div>
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Client Name</div>
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Lawyer Name</div>
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Date Range</div>
+              <div><i class="fas fa-filter text-blue-500 mr-1"></i> Priority Level</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Case Distribution Chart
+      const ctx = document.getElementById('caseDistributionChart').getContext('2d');
+      const caseDistributionChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Active', 'Pending', 'Completed', 'Disputed'],
+          datasets: [{
+            data: [42, 18, 35, 5],
+            backgroundColor: [
+              '#48BB78', // green for active
+              '#ECC94B', // yellow for pending
+              '#3182CE', // blue for completed
+              '#E53E3E'  // red for disputed
+            ],
+            borderWidth: 1,
+            borderColor: '#E2E8F0'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                boxWidth: 15,
+                padding: 15,
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'Current Case Status Distribution',
+              font: {
+                size: 14
+              },
+              padding: {
+                bottom: 15
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+

@@ -1,15 +1,95 @@
 import React, { useState } from 'react';
 import { AdminDashboardLayout } from '../../components/Dashboard/AdminDashboardLayout';
+import { Eye, EyeOff, ClipboardCheck, ClipboardCopy } from 'lucide-react';
 
 const AdminSecureLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [copied, setCopied] = useState(false);
-  
+  const [copiedId, setCopiedId] = useState(null);
+
   const adminCredentials = [
-    { id: 1, name: 'Ethan Miller', email: 'ethan.admin@lexova.com', password: 'Lex0va@Admin2025!', role: 'Super Admin', lastLogin: '2 hours ago' },
-    { id: 2, name: 'Aron Johnson', email: 'aron.admin@lexova.com', password: 'Lex0va@Admin2025#', role: 'System Admin', lastLogin: 'Yesterday' },
-    { id: 3, name: 'Aiden Smith', email: 'aiden.admin@lexova.com', password: 'Lex0va@Admin2025$', role: 'Content Admin', lastLogin: '3 days ago' },
+    {
+      id: 1,
+      name: 'Ethan Miller',
+      email: 'ethan.admin@lexova.com',
+      password: 'Lex0va@Admin2025!',
+      role: 'Super Admin',
+      lastLogin: '2 hours ago',
+    },
+    {
+      id: 2,
+      name: 'Aron Johnson',
+      email: 'aron.admin@lexova.com',
+      password: 'Lex0va@Admin2025#',
+      role: 'System Admin',
+      lastLogin: 'Yesterday',
+    },
+    {
+      id: 3,
+      name: 'Aiden Smith',
+      email: 'aiden.admin@lexova.com',
+      password: 'Lex0va@Admin2025$',
+      role: 'Content Admin',
+      lastLogin: '3 days ago',
+    },
   ];
+
+  const handleCopy = (password, id) => {
+    navigator.clipboard.writeText(password);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  return (
+    <AdminDashboardLayout>
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-4">Admin Secure Login Info</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border rounded-md text-sm">
+            <thead className="bg-gray-100 text-left">
+              <tr>
+                <th className="p-3">Name</th>
+                <th className="p-3">Email</th>
+                <th className="p-3">Password</th>
+                <th className="p-3">Role</th>
+                <th className="p-3">Last Login</th>
+              </tr>
+            </thead>
+            <tbody>
+              {adminCredentials.map((admin) => (
+                <tr key={admin.id} className="border-t">
+                  <td className="p-3">{admin.name}</td>
+                  <td className="p-3">{admin.email}</td>
+                  <td className="p-3 flex items-center gap-2">
+                    <span>{showPassword ? admin.password : '•••••••••••'}</span>
+                    <button
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-gray-500 hover:text-black"
+                    >
+                      {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    </button>
+                    <button
+                      onClick={() => handleCopy(admin.password, admin.id)}
+                      className="text-gray-500 hover:text-black"
+                    >
+                      {copiedId === admin.id ? (
+                        <ClipboardCheck size={16} className="text-green-500" />
+                      ) : (
+                        <ClipboardCopy size={16} />
+                      )}
+                    </button>
+                  </td>
+                  <td className="p-3">{admin.role}</td>
+                  <td className="p-3">{admin.lastLogin}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          Passwords are only visible for testing purposes. Do not share outside the secure environment.
+        </p>
+      <
+
   
   const handleCopyCredentials = () => {
     const credText = adminCredentials.map(cred => 

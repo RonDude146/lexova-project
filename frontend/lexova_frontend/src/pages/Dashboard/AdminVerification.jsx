@@ -875,33 +875,33 @@ const AdminVerification = () => {
                     </CardContent>
                   </Card>
                   
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-xs text-gray-600">Approval Rate</p>
-                          <p className="text-xl font-bold text-green-600">78%</p>
-                        </div>
-                        <div className="bg-green-50 p-2 rounded-full">
-                          <BarChart className="h-4 w-4 text-green-600" />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-xs text-gray-600">Pending > 7 Days</p>
-                          <p className="text-xl font-bold text-yellow-600">2</p>
-                        </div>
-                        <div className="bg-yellow-50 p-2 rounded-full">
-                          <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+<Card>
+  <CardContent className="p-4">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-xs text-gray-600">Approval Rate</p>
+        <p className="text-xl font-bold text-green-600">78%</p>
+      </div>
+      <div className="bg-green-50 p-2 rounded-full">
+        <BarChart className="h-4 w-4 text-green-600" />
+      </div>
+    </div>
+  </CardContent>
+</Card>
+
+<Card>
+  <CardContent className="p-4">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-xs text-gray-600">Pending &gt; 7 Days</p>
+        <p className="text-xl font-bold text-yellow-600">2</p>
+      </div>
+      <div className="bg-yellow-50 p-2 rounded-full">
+        <AlertTriangle className="h-4 w-4 text-yellow-600" />
+      </div>
+    </div>
+  </CardContent>
+</Card>
                   
                   <Card>
                     <CardContent className="p-4">

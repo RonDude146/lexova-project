@@ -91,23 +91,39 @@ const AdminSecureLogin = () => {
       <
 
   
-  const handleCopyCredentials = () => {
-    const credText = adminCredentials.map(cred => 
-      `Name: ${cred.name}\nEmail: ${cred.email}\nPassword: ${cred.password}\nRole: ${cred.role}\n\n`
-    ).join('');
-    
-    navigator.clipboard.writeText(credText);
-    setCopied(true);
-    
-    setTimeout(() => {
-      setCopied(false);
-    }, 3000);
-  };
-  
-  const generateNewPassword = () => {
-    // This would typically connect to an API to generate and update passwords
-    alert('This feature would connect to the backend to generate and update admin passwords.');
-  };
+const handleCopyCredentials = () => {
+  const credText = adminCredentials
+    .map(
+      (cred) =>
+        `Name: ${cred.name}\nEmail: ${cred.email}\nPassword: ${cred.password}\nRole: ${cred.role}\n\n`
+    )
+    .join('');
+
+  navigator.clipboard.writeText(credText);
+  setCopied(true);
+  setTimeout(() => {
+    setCopied(false);
+  }, 3000);
+};
+
+const handleCopy = (password) => {
+  navigator.clipboard.writeText(password);
+  setCopied(true);
+  setTimeout(() => {
+    setCopied(false);
+  }, 3000);
+};
+
+const generateNewPassword = () => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$!';
+  let password = '';
+  for (let i = 0; i < 16; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+};
+
+
   
   return (
     <AdminDashboardLayout>
